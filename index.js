@@ -5,7 +5,7 @@ let handlers = require('./handlers/index')
 let port = 8080
 
 http
-    .createServer((req, res, event) => {
+    .createServer((req, res) => {
       for (let handler of handlers) {
         console.log(handler)
         let next = handler(req, res)
@@ -14,5 +14,4 @@ http
     })
 .listen(port)
 console.log(`Server listening to port ${port}`)
-
 

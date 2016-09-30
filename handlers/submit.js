@@ -1,7 +1,7 @@
 let url = require('url')
 let fs = require('fs')
 let imagesDB = []
-
+let qs = require('querystring')
 
 let addImages = (newItem) => {
   let obj = {}
@@ -26,17 +26,19 @@ let getAllImages = (images) => {
   }
   return resultImages
 }
-module.exports = function (req, res, event) {
+module.exports = function (req, res) {
   req.pathname = req.pathname || url.parse(req.url).pathname
   if (req.method === 'POST' && req.pathname === '/submit') {
     var body = []
     req.on('data', function (chunk) {
+      var test = (chunk) ? chunk : ''
       body += chunk
     }).on('end', function () {
-      body = JSON.stringify(body.replace('"', ''))
-      body = body.split('&')
+      body = qs.parse(body)
+      // body = JSON.stringify(body.replace('"', ''))
+      // body = body.split('&')
       addImages(body)
-            // at this point, `body` has the entire request body stored in it as a string
+            
     })
     //var html = fs.readFileSync('').toString()
     
