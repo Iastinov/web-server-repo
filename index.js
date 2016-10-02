@@ -7,7 +7,6 @@ let port = 8080
 http
     .createServer((req, res) => {
       for (let handler of handlers) {
-        console.log(handler)
         let next = handler(req, res)
         if (!next) break
       }

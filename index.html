@@ -7,13 +7,13 @@
 </head>
 <body>
     <h1>SOme data here</h1>
-    <form id="myForm" action="submit" method="POST" accept-charset="UTF-8"> 
+    <form id="myForm" method="POST" action="submit" enctype="multipart/form-data"> 
+        <input type="checkbox" name ="isPrivate"/></br>
         <label for="image_name">Image</label>
-        <input type="text" name="image_name"/ required >
+        <input type="text" name="image_name"/></br>
         
-        <label for="url">URL</label>
-        <input type="text" name="url"/ required>
-    
+        <input type="file" name="filename"/ >
+</br>
         <input type="submit" value="Submit"/>
     </form>
     <div class="hidden"> 
