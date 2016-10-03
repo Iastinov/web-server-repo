@@ -18,12 +18,9 @@ module.exports = function (req, res) {
         }
         body += '</div>'
         res.writeHead(200, {
-          'Content-Type': 'text/html',
-          'Content-Encoding': 'gzip'
-          
+          'Content-Type': 'text/html'
         })
-        var wstream = fs.createWriteStream(body)
-        res.pipe(zlib.createGzip()).pipe(wstream)
+        res.write(body)
         res.end()
       }
     })
