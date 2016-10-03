@@ -10,6 +10,7 @@ module.exports = function (req, res) {
       res.end()
       return true
     }
+
     let contetType = getContentType(req.pathname)
 
     res.writeHead(200, {

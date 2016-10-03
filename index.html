@@ -8,6 +8,7 @@
 <body>
     <h1>SOme data here</h1>
     <form id="myForm" method="POST" action="submit" enctype="multipart/form-data"> 
+        <label for="isPrivate">Private/Public</label>
         <input type="checkbox" name ="isPrivate"/></br>
         <label for="image_name">Image</label>
         <input type="text" name="image_name"/></br>
@@ -15,6 +16,7 @@
         <input type="file" name="filename"/ >
 </br>
         <input type="submit" value="Submit"/>
+        <a href="http://localhost:8080/content/public/">List of images</a>
     </form>
     <div class="hidden"> 
         Image has been added successfully

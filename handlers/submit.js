@@ -8,8 +8,11 @@ let multer = require('multer')
 let upload = multer({ dest: 'content/' })
 
 
-let isPrivate = false;
-
+let isPrivate = false
+let errorTypes = {
+  empty: 'You have an empty fields',
+  img_error: 'Only jpg images are allowed!'
+}
 let addImages = (newItem) => {
   // let obj = {}
   if (newItem) {
@@ -58,20 +61,21 @@ module.exports = function (req, res) {
         part.on('end', () => {
           // private public function
           var destinationFolder = (isPrivate) ? './content/private/' : './content/public/'
-              var filename = (isPrivate) ? `${cryptoUrl(part.filename)}` : `${part.filename}`
-  
+          var filename = part.filename
+
           var wstream = fs.createWriteStream(destinationFolder + filename)
           console.log(body)
           wstream.write(body, 'binary')
           wstream.end()
-          res.write('Uploaded')
         })
       } else { // text
         let body = ''
         part.on('data', function (chunk) {
           body += chunk
           if (part.name === 'isPrivate' && body === 'on') {
-            isPrivate = true;
+            isPrivate = true
+          } else {
+            isPrivate = false
           }
           console.log(body)
         })
@@ -79,12 +83,22 @@ module.exports = function (req, res) {
           obj[part.name] = body
         })
       }
-
     })
     form.on('close', () => {
       console.log('Upload completed!')
       addImages(obj)
-      res.end()
+      fs.readFile('index.html', (err, data) => {
+        if (err) {
+          console.log(err)
+          res.writeHead(404)
+          res.write(err.message)
+          res.end()
+        } else {
+          res.writeHead(200)
+          res.write(data + '<div>Succesfull</div>')
+          res.end()
+        }
+      })
     })
     form.parse(req)
   } else { return true }
